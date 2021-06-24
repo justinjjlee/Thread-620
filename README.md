@@ -4,6 +4,8 @@ Natural Language Processing exercise in the context of Federal Reserve Bank's FO
 ## Contents
 The workbook consists of the following
 * Data pull of the Federal Reserve Districts' ['Beige Book'](https://www.federalreserve.gov/monetarypolicy/beige-book-default.htm), From 1970 May to Current.
+  * Broken out by categories/industries interviewed
+  * Collect all district's reports and summaries
 * Data clean and primary feature extraction - Exploratory Data Analysis (TBD)
 * Basic predictor analysis of consumer and business sentiment analysis (TBD)
 * Basic predictor analysis of macroeconomic conditions (TBD)
