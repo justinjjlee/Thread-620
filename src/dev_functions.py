@@ -9,7 +9,11 @@ import os
 
 from dev_settings import *
 
-# Pull historical file
+# Given all the original data is pulled, no need for pulling all again.
+#   For those wishes to scrap based on own specification, change it to True.
+pull_origin = False;
+
+# Clean the data
 def text_scrap(soupified, str_region):
     txt = soupified.find("div", {"class": "col-sm-12 col-lg-8 offset-lg-1"});
     #blab
@@ -123,6 +127,14 @@ collect_no_url = [' '];
 # Go through and pull data
 for idx_region, iter_region in enumerate(str_region.values):
     # Define the complete url
+
+    # Select what date frame to pull.
+    vec_date = [];
+    if pull_origin == True :
+        vec_date = str_report_mo_yr
+    else:
+        vec_date = str_report_mo_yr_new
+
     str_report = [str_directory + iter[0:4] + '/' + iter + iter_region[0] for iter in str_report_mo_yr];
     for idx, iter_url in enumerate(str_report):
         time.sleep(0.90) 
@@ -149,9 +161,10 @@ for idx_region, iter_region in enumerate(str_region.values):
         except: # if starting
             df_fin = text_scrap(soupified, iter_region[1])
 
-
-# Collect rest that was not available, from the list collected,
-#   Adhoc collection for exceptions
-
 # Save the data
-df_fin.to_csv("data_beigebook.txt", index = False)
+if pull_origin == True:
+    df_fin.to_csv("data_beigebook.txt", index = False)
+else: # pull the data, append, and save the data.
+    df_all = pd.read_csv("data_beigebook.txt");
+    df_all.append(df_fin, inplace = True);
+    df_all.to_csv("data_beigebook.txt", index = False)
